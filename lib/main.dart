@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttery/layout.dart';
 
 void main() => runApp(new MyApp());
 
@@ -57,47 +58,47 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-
-  Widget _buildBottomBar(){
+  Widget _buildBottomBar() {
     return BottomAppBar(
       color: Colors.transparent,
       elevation: 0.0,
-      child: new Padding(padding: const EdgeInsets.all(16.0),
+      child: new Padding(
+        padding: const EdgeInsets.all(16.0),
         child: new Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             new RoundIconButton.small(
               icon: Icons.refresh,
               iconColor: Colors.orange,
-              onPressed: (){
+              onPressed: () {
                 //todo
               },
             ),
             new RoundIconButton.large(
-              icon:Icons.clear,
-              iconColor:  Colors.red,
-              onPressed: (){
+              icon: Icons.clear,
+              iconColor: Colors.red,
+              onPressed: () {
                 //todo
               },
             ),
             new RoundIconButton.small(
               icon: Icons.star,
               iconColor: Colors.blue,
-              onPressed: (){
+              onPressed: () {
                 //todo
               },
             ),
             new RoundIconButton.large(
               icon: Icons.favorite,
               iconColor: Colors.green,
-              onPressed: (){
+              onPressed: () {
                 //todo
               },
             ),
             new RoundIconButton.small(
               icon: Icons.lock,
               iconColor: Colors.purple,
-              onPressed: (){
+              onPressed: () {
                 //todo
               },
             )
@@ -107,20 +108,49 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Widget _buildCardStack() {
+    return new AnchoredOverlay(
+      showOverlay: true,
+      child: new Center(),
+      overlayBuilder: (BuildContext context, Rect anchorBounds, Offset anchor) {
+        return CenterAbout(
+          position: anchor,
+          child: new Container(
+            width: anchorBounds.width,
+            height: anchorBounds.height,
+            padding: const EdgeInsets.all(16.0),
+            child: new ProfileCard(),
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: _buildAppBar(),
-      body: new Center(),
+      body: _buildCardStack(),
       bottomNavigationBar: _buildBottomBar(),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
 
-class RoundIconButton extends StatelessWidget{
+class ProfileCard extends StatefulWidget {
+  @override
+  _ProfileCardState createState() => _ProfileCardState();
+}
 
+class _ProfileCardState extends State<ProfileCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+
+class RoundIconButton extends StatelessWidget {
   final IconData icon;
   final Color iconColor;
   final double size;
@@ -130,13 +160,13 @@ class RoundIconButton extends StatelessWidget{
     this.icon,
     this.iconColor,
     this.onPressed,
-  }):size = 60.0;
+  }) : size = 60.0;
 
   RoundIconButton.small({
     this.icon,
     this.iconColor,
     this.onPressed,
-  }):size = 60.0;
+  }) : size = 60.0;
 
   RoundIconButton({
     this.icon,
@@ -152,15 +182,11 @@ class RoundIconButton extends StatelessWidget{
       width: size,
       height: size,
       decoration: new BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          new BoxShadow(
-            color: const Color(0x11000000),
-            blurRadius: 10.0
-          )
-        ]
-      ),
+          shape: BoxShape.circle,
+          color: Colors.white,
+          boxShadow: [
+            new BoxShadow(color: const Color(0x11000000), blurRadius: 10.0)
+          ]),
       child: new RawMaterialButton(
         shape: new CircleBorder(),
         elevation: 0.0,
@@ -173,4 +199,3 @@ class RoundIconButton extends StatelessWidget{
     );
   }
 }
-
